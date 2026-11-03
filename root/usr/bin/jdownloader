@@ -1,0 +1,17 @@
+#!/bin/bash
+JDOWNLOADER_JAR=/config/JDownloader.jar
+mkdir -p /config/cfg
+
+if [[ ! -f "/config/JDownloader.jar" ]]; then
+  echo "Deploying default JDownloader.jar."
+  cp /defaults/JDownloader.jar ${JDOWNLOADER_JAR}
+fi
+
+for file in /defaults/cfg/org.jdownloader.*.json; do
+  if [[ ! -f "/config/cfg/$(basename ${file})" ]]; then
+    echo "Deploying default config file ${file}."
+    cp "${file}" /config/cfg/
+  fi
+done
+
+java -jar ${JDOWNLOADER_JAR} "$@"
