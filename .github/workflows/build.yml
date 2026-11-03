@@ -1,5 +1,9 @@
 name: Build Docker image
 
+permissions:
+  packages: write
+  pull-requests: write
+
 on:
   # Allow manual runs.
   workflow_dispatch:
@@ -39,7 +43,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ GITHUB_TOKEN }}
+          password: ${{ github.token }}
 
       - name: Build and push ${{ env.IMAGE_NAME }} Docker image
         uses: docker/build-push-action@v7
